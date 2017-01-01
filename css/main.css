@@ -1,0 +1,50 @@
+.order-item{
+  border:1px solid #000;
+  border-top-left-radius:0;
+  border-bottom-left-radius:0;
+  text-align: center;
+  line-height:70px;
+  font-size:20px;
+  width:70%;
+  padding:0;
+}
+.order-minus{
+  border:1px solid #000;
+  border-top-right-radius:0;
+  border-bottom-right-radius:0;
+  line-height:70px;
+  font-size:20px;
+  width:30%;
+  padding:0;
+}
+
+.order-id{
+  font-size:24px;
+}
+.order-item-content{
+  margin-bottom:8px;
+}
+
+.order-item-1{
+  background:#FFC1E0;
+}
+.order-item-2{
+  background:#FFD1A4;
+}
+.order-item-3{
+  background:#ACD6FF;
+}
+.order-item-4{
+  background:#D9B3B3;
+}
+.order-item-5{
+  background:#CCFF80;
+}
+.order-item-6{
+  background:#FFE6D9;
+}
+
+.check-item{
+  border:1px solid #000;
+  margin-bottom:5px;
+}
