@@ -27,7 +27,7 @@
     $rootScope.data={};
     $rootScope.data.menuList=localStorageService.getProperty("menuList")||[];
     $rootScope.data.checkList = localStorageService.getProperty("checkList")||[];
-    $rootScope.data.orderList={data:[]};
+    $rootScope.data.orderList={data:[],spicy:0};
     $rootScope.data.checkId = localStorageService.getProperty("checkId")||0;
     $rootScope.swal=swal;
 
@@ -63,6 +63,14 @@
       });
       return total;
     };
+
+    vm.numberCount = function(list){
+      var total = 0;
+      angular.forEach(list,function(value,key){
+        total+=value.count;
+      });
+      return total;
+    };
   }]);
 
   app.controller('OrderController',['localStorageService','$filter','$rootScope','$timeout',function(localStorageService,$filter,$rootScope,$timeout){
@@ -71,6 +79,7 @@
     vm.menuList = $filter('orderBy')(vm.menuList , 'id');
     vm.checkList = $rootScope.data.checkList;
     //vm.checkList = $filter('orderBy')(vm.checkList , 'id');
+    vm.checkId = $rootScope.data.checkId;
 
     vm.orderList=$rootScope.data.orderList;
 
@@ -143,8 +152,9 @@
             if(value.id===copy.id)
               vm.orderList[key] = copy;
           });
+          localStorageService.setProperty("checkList",vm.checkList);
         }else{
-          var id =$rootScope.data.checkId;
+          var id =vm.checkId;
           if(vm.checkList.length){          
             id = vm.checkList[vm.checkList.length-1]["id"];  
           }
@@ -154,17 +164,17 @@
           }
           copy.id=id;
           vm.checkList.push(copy);
-          $rootScope.data.checkId=id;          
-          localStorageService.setProperty("checkId",$rootScope.data.checkId);
+          vm.checkId=id;          
+          localStorageService.setProperty("checkId",vm.checkId);
           localStorageService.setProperty("checkList",vm.checkList);
         }
-        vm.orderList={data:[]};
+        vm.orderList={data:[],spicy:0};
         $rootScope.data.orderList=vm.orderList;
       },1);
     };
 
     vm.clear=function(){
-      vm.orderList={data:[]};
+      vm.orderList={data:[],spicy:0};
       $rootScope.data.orderList=vm.orderList;
     };
   }]);
@@ -206,7 +216,7 @@
       },1);
     };
 
-    vm.reIdSuccess=function(){
+    vm.reId=function(){
       $rootScope.swal({
         title: "單號強制重算?",
         text: "",

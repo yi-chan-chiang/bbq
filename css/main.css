@@ -48,3 +48,14 @@
   border:1px solid #000;
   margin-bottom:5px;
 }
+
+.btn-spicy .active{
+  color: #fff !important;
+  background-color: #c9302c !important;
+  border-color: #ac2925 !important;
+}
+
+.menu-item{
+  padding-left: 5px;
+  padding-right: 5px;
+}

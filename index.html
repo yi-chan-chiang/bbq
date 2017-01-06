@@ -39,7 +39,7 @@
         <div class="order-menu col-xs-8 col-sm-9">
           <div class="row">
             <div ng-repeat="item in order.menuList" 
-                 class="col-xs-6 col-sm-4 col-md-3">
+                 class="col-xs-6 col-sm-4 col-md-2 menu-item">
               <div ng-click="order.minus(item)" class="order-minus btn btn-default pull-left">
                 <i class="glyphicon glyphicon-minus"></i>
               </div>
@@ -59,10 +59,25 @@
         <div class="order-list col-xs-4 col-sm-3">
           <div class="row">
             <div class="btn-group col-xs-12" role="group">
-              <div ng-click="order.submit()" class="btn btn-primary col-xs-6">確定</div>
-              <div ng-click="order.clear()" class="btn btn-default col-xs-6">清空</div>
+              <div ng-click="order.submit()" class="btn btn-lg btn-primary col-xs-8">確定</div>
+              <div ng-click="order.clear()" class="btn btn-lg btn-default col-xs-4">清空</div>
             </div>
             <div class="order-id col-xs-12 text-right">單號：{{order.orderList.id||'NEW'}}</div>
+            <div class="order-id col-xs-12 text-right">總共：{{main.numberCount(order.orderList.data)||0}}枝</div>
+            <div class="col-xs-12 btn-spicy"  data-toggle="">
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==0}">
+                <input type="radio" name="spicy" id="option1" autocomplete="off" ng-model="order.orderList.spicy" value="0"> 不辣
+              </label>
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==1}">
+                <input type="radio" name="spicy" id="option2" autocomplete="off" ng-model="order.orderList.spicy" value="1"> 小辣
+              </label>
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==2}">
+                <input type="radio" name="spicy" id="option3" autocomplete="off" ng-model="order.orderList.spicy" value="2"> 中辣
+              </label>
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==3}">
+                <input type="radio" name="spicy" id="option4" autocomplete="off" ng-model="order.orderList.spicy" value="3"> 大辣
+              </label>
+            </div>
             <table class="table table-hover table-striped">
               <tr ng-repeat="item in order.orderList.data|orderBy:'id'">
                 <td class="">{{item.name}}</td>
@@ -76,13 +91,13 @@
                   {{main.totalCount(order.orderList.data)}}
                 </td>
               </tr>
-              <tr>
+              <!--<tr>
                 <td></td>
                 <td class="text-right"><b>9折價:</b></td>
                 <td class="text-right">
                   {{main.totalCount(order.orderList.data)*main.discount}}
                 </td>
-              </tr>
+              </tr>-->
             </table>
           </div>
         </div>
@@ -97,6 +112,21 @@
         <div class="col-xs-12 col-sm-6 col-md-4">
           <div class="check-item">
             <div class="order-id col-xs-12 text-right">單號：{{list.id}}</div>
+            <div class="order-id col-xs-12 text-right">總共：{{main.numberCount(list.data)||0}}枝</div>
+            <div class="col-xs-12 btn-spicy"  data-toggle="">
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==0}">
+                <input type="radio" name="spicy" id="option1" autocomplete="off" ng-model="list.spicy" value="0" disabled> 不辣
+              </label>
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==1}">
+                <input type="radio" name="spicy" id="option2" autocomplete="off" ng-model="list.spicy" value="1" disabled> 小辣
+              </label>
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==2}">
+                <input type="radio" name="spicy" id="option3" autocomplete="off" ng-model="list.spicy" value="2" disabled> 中辣
+              </label>
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==3}">
+                <input type="radio" name="spicy" id="option4" autocomplete="off" ng-model="list.spicy" value="3" disabled> 大辣
+              </label>
+            </div>
             <table class="table table-hover table-striped">
               <tr ng-repeat="item in list.data|orderBy:'id'">
                 <td class="">{{item.name}}</td>
@@ -110,13 +140,13 @@
                   {{main.totalCount(list.data)}}
                 </td>
               </tr>
-              <tr>
+              <!--<tr>
                 <td></td>
                 <td class="text-right"><b>9折價:</b></td>
                 <td class="text-right">
                   {{main.totalCount(list.data)*main.discount}}
                 </td>
-              </tr>
+              </tr>-->
               <tr>
                 <td colspan="3">
                   <div class="btn-group col-xs-12" role="group">
