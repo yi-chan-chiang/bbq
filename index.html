@@ -62,7 +62,7 @@
               <div ng-click="order.submit()" class="btn btn-lg btn-primary col-xs-8">確定</div>
               <div ng-click="order.clear()" class="btn btn-lg btn-default col-xs-4">清空</div>
             </div>
-            <div class="order-id col-xs-12 text-right">單號：{{order.orderList.id||'NEW'}}</div>
+            <div class="order-id col-xs-12 text-right">單號：{{order.orderList.id||'NEW>'+order.newId(order.orderList.id)}}</div>
             <div class="order-id col-xs-12 text-right">總共：{{main.numberCount(order.orderList.data)||0}}枝</div>
             <div class="col-xs-12 btn-spicy"  data-toggle="">
               <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==0}">
@@ -78,17 +78,22 @@
                 <input type="radio" name="spicy" id="option4" autocomplete="off" ng-model="order.orderList.spicy" value="3"> 大辣
               </label>
             </div>
-            <table class="table table-hover table-striped">
+            <table class="table table-hover table-striped list-table">
+              <tr>
+                <td>商品</td>
+                <td class="text-right">數量</td>
+                <td class="text-right">單價</td>                
+                <td class="text-right">價格</td>
+              </tr>
               <tr ng-repeat="item in order.orderList.data|orderBy:'id'">
                 <td class="">{{item.name}}</td>
-                <td class="text-right">{{item.price}}X{{item.count}}</td>
+                <td class="text-right">{{item.count}}</td>
+                <td class="text-right">{{item.price}}</td>                
                 <td class="text-right">{{item.price*item.count}}</td>
               </tr>
               <tr>
-                <td></td>
-                <td class="text-right"><b>總計:</b></td>
-                <td class="text-right">
-                  {{main.totalCount(order.orderList.data)}}
+                <td colspan="4" class="text-right">
+                  總計：{{main.totalCount(order.orderList.data)}}
                 </td>
               </tr>
               <!--<tr>
@@ -127,17 +132,22 @@
                 <input type="radio" name="spicy" id="option4" autocomplete="off" ng-model="list.spicy" value="3" disabled> 大辣
               </label>
             </div>
-            <table class="table table-hover table-striped">
+            <table class="table table-hover table-striped list-table">
+              <tr>
+                <td>商品</td>
+                <td class="text-right">數量</td>
+                <td class="text-right">單價</td>                
+                <td class="text-right">價格</td>
+              </tr>
               <tr ng-repeat="item in list.data|orderBy:'id'">
                 <td class="">{{item.name}}</td>
-                <td class="text-right">{{item.price}}X{{item.count}}</td>
+                <td class="text-right">{{item.count}}</td>
+                <td class="text-right">{{item.price}}</td>              
                 <td class="text-right">{{item.price*item.count}}</td>
               </tr>
               <tr>
-                <td></td>
-                <td class="text-right"><b>總計:</b></td>
-                <td class="text-right">
-                  {{main.totalCount(list.data)}}
+                <td colspan="4" class="text-right">
+                  總計：{{main.totalCount(list.data)}}
                 </td>
               </tr>
               <!--<tr>
@@ -148,7 +158,7 @@
                 </td>
               </tr>-->
               <tr>
-                <td colspan="3">
+                <td colspan="4">
                   <div class="btn-group col-xs-12" role="group">
                     <div ng-click="check.edit(list)" class="btn btn-info col-xs-4">修改</div>
                     <div ng-click="check.submit(list)" class="btn btn-primary col-xs-8">以交貨</div>                    

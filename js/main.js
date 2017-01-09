@@ -129,18 +129,22 @@
 
 
     vm.submit=function(){
-      $rootScope.swal({
-        title: "已輸入完成?",
-        text: "菜單將會轉到結帳區",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "點菜完成",
-        closeOnConfirm: false
-      },function(){
-        vm.submitSuccess();
-        swal("完成!", "菜單已經轉到結帳區", "success");        
-      });
+      if(vm.orderList.data.length>0){
+        $rootScope.swal({
+          title: "已輸入完成?",
+          text: "菜單將會轉到結帳區",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-danger",
+          confirmButtonText: "點菜完成",
+          closeOnConfirm: false
+        },function(){          
+          vm.submitSuccess();
+          swal("完成!", "菜單已經轉到結帳區", "success");                  
+        });
+      }else{
+        swal("錯誤!", "尚未選擇商品", "error");      
+      }
     };
 
     vm.submitSuccess=function(){
@@ -154,17 +158,18 @@
           });
           localStorageService.setProperty("checkList",vm.checkList);
         }else{
-          var id =vm.checkId;
-          if(vm.checkList.length){          
-            id = vm.checkList[vm.checkList.length-1]["id"];  
-          }
+          var id =$rootScope.data.checkId;
+          //if(vm.checkList.length){          
+          //  id = vm.checkList[vm.checkList.length-1]["id"];  
+          //}
           id++;
           if(id>50){
             id=1;
           }
           copy.id=id;
           vm.checkList.push(copy);
-          vm.checkId=id;          
+          vm.checkId=id;     
+          $rootScope.data.checkId= vm.checkId;   
           localStorageService.setProperty("checkId",vm.checkId);
           localStorageService.setProperty("checkList",vm.checkList);
         }
@@ -177,6 +182,17 @@
       vm.orderList={data:[],spicy:0};
       $rootScope.data.orderList=vm.orderList;
     };
+
+    vm.newId=function(id){
+      if(!id){
+        if(vm.checkId+1>50){
+          return 1;
+        }
+        else{
+          return vm.checkId+1;
+        }
+      }
+    }
   }]);
 
 
