@@ -77,7 +77,7 @@
               <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==3}">
                 <input type="radio" name="spicy" id="option4" autocomplete="off" ng-model="order.orderList.spicy" value="3"> 大辣
               </label>
-            </div>
+            </div>                        
             <table class="table table-hover table-striped list-table">
               <tr>
                 <td>商品</td>
@@ -96,14 +96,20 @@
                   總計：{{main.totalCount(order.orderList.data)}}
                 </td>
               </tr>
-              <!--<tr>
-                <td></td>
-                <td class="text-right"><b>9折價:</b></td>
-                <td class="text-right">
-                  {{main.totalCount(order.orderList.data)*main.discount}}
+              <tr>
+                <td colspan="4" class="text-right">
+                  9折：{{main.totalCount(order.orderList.data)*main.discount}}
                 </td>
-              </tr>-->
+              </tr>
             </table>
+            <div class="btn-group col-xs-12 btn-pay"  data-toggle="">
+              <label class="btn btn-lg btn-default col-xs-6">
+                <input type="radio" name="pay" id="option1" autocomplete="off" ng-model="order.orderList.pay" value="1"> 已付款
+              </label>
+              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.pay==0}">
+                <input type="radio" name="pay" id="option2" autocomplete="off" ng-model="order.orderList.pay" value="0"> 未付款
+              </label>              
+            </div>
           </div>
         </div>
       </div>
@@ -150,13 +156,23 @@
                   總計：{{main.totalCount(list.data)}}
                 </td>
               </tr>
-              <!--<tr>
-                <td></td>
-                <td class="text-right"><b>9折價:</b></td>
-                <td class="text-right">
-                  {{main.totalCount(list.data)*main.discount}}
+              <tr>
+                <td colspan="4" class="text-right">
+                  9折：{{main.totalCount(list.data)*main.discount}}
                 </td>
-              </tr>-->
+              </tr>
+              <tr>
+                <td colspan="4">
+                  <div class="btn-group col-xs-12 btn-pay"  data-toggle="">
+                    <label class="btn btn-lg btn-default col-xs-6">
+                      <input type="radio" name="pay" id="option1" autocomplete="off" ng-model="list.pay" value="1" disabled> 已付款
+                    </label>
+                    <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.pay==0}">
+                      <input type="radio" name="pay" id="option2" autocomplete="off" ng-model="list.pay" value="0" disabled> 未付款
+                    </label>
+                  </div>
+                </td>
+              </tr>
               <tr>
                 <td colspan="4">
                   <div class="btn-group col-xs-12" role="group">

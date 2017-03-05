@@ -60,6 +60,13 @@ html,body{
   border-color: #ac2925 !important;
 }
 
+
+.btn-pay .active{
+  color: #fff !important;
+  background-color: #337ab7 !important;
+  border-color: #2e6da4 !important;
+}
+
 .menu-item{
   padding-left: 5px;
   padding-right: 5px;

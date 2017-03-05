@@ -8,7 +8,7 @@
       var result=[];
       if(propertyName =="menuList"){
         //讀取JSON
-        result = [{"name":"大魷魚","price":100,"id":1,"class":1},{"name":"雞腿","price":70,"id":2,"class":1},{"name":"香雞排","price":60,"id":3,"class":1},{"name":"牛肉蔥捲","price":45,"id":4,"class":1},{"name":"豬肉蔥捲","price":40,"id":5,"class":1},{"name":"牛條肉","price":40,"id":6,"class":1},{"name":"雞腿捲","price":35,"id":7,"class":2},{"name":"小腿排","price":35,"id":8,"class":2},{"name":"雞肉串","price":35,"id":9,"class":2},{"name":"翅膀","price":35,"id":10,"class":2},{"name":"肥腸","price":35,"id":11,"class":2},{"name":"玉米","price":35,"id":12,"class":2},{"name":"一口香腸","price":30,"id":13,"class":3},{"name":"豬五花","price":30,"id":14,"class":3},{"name":"尾椎","price":30,"id":15,"class":3},{"name":"雞心","price":30,"id":16,"class":3},{"name":"豬肉蔥串","price":25,"id":17,"class":4},{"name":"雞腱","price":25,"id":18,"class":4},{"name":"米血","price":25,"id":19,"class":4},{"name":"小肉豆","price":25,"id":20,"class":4},{"name":"銀絲卷","price":25,"id":21,"class":4},{"name":"杏鮑菇","price":25,"id":22,"class":4},{"name":"青椒","price":25,"id":23,"class":4},{"name":"麻糬","price":25,"id":24,"class":4},{"name":"香菇","price":25,"id":25,"class":4},{"name":"豆皮","price":25,"id":26,"class":4},{"name":"黃甜","price":25,"id":27,"class":4},{"name":"牛肉串","price":20,"id":28,"class":5},{"name":"羊肉串","price":20,"id":29,"class":5},{"name":"豬肉串","price":20,"id":30,"class":5},{"name":"鱈魚丸","price":20,"id":31,"class":5},{"name":"花枝丸","price":20,"id":32,"class":5},{"name":"四季豆","price":20,"id":33,"class":5},{"name":"百頁豆腐","price":20,"id":34,"class":5},{"name":"米腸","price":20,"id":35,"class":5},{"name":"雞皮","price":20,"id":36,"class":5},{"name":"白甜","price":20,"id":37,"class":5},{"name":"洋蔥","price":20,"id":38,"class":5},{"name":"豆干","price":20,"id":39,"class":5},{"name":"雞脖子","price":10,"id":40,"class":6},{"name":"黑輪","price":10,"id":41,"class":6},{"name":"熱狗","price":10,"id":42,"class":6}];
+        result = [{"name":"大魷魚","price":100,"id":1,"class":1},{"name":"雞腿","price":70,"id":2,"class":1},{"name":"香雞排","price":60,"id":3,"class":1},{"name":"牛肉蔥捲","price":45,"id":4,"class":1},{"name":"豬肉蔥捲","price":40,"id":5,"class":1},{"name":"牛條肉","price":40,"id":6,"class":1},{"name":"雞腿捲","price":35,"id":7,"class":2},{"name":"小腿排","price":35,"id":8,"class":2},{"name":"雞肉串","price":35,"id":9,"class":2},{"name":"翅膀","price":30,"id":10,"class":2},{"name":"肥腸","price":35,"id":11,"class":2},{"name":"玉米","price":35,"id":12,"class":2},{"name":"一口香腸","price":30,"id":13,"class":3},{"name":"豬五花","price":30,"id":14,"class":3},{"name":"尾椎","price":30,"id":15,"class":3},{"name":"雞心","price":30,"id":16,"class":3},{"name":"豬肉蔥串","price":25,"id":17,"class":4},{"name":"雞腱","price":25,"id":18,"class":4},{"name":"米血","price":25,"id":19,"class":4},{"name":"小肉豆","price":20,"id":20,"class":4},{"name":"銀絲卷","price":25,"id":21,"class":4},{"name":"杏鮑菇","price":25,"id":22,"class":4},{"name":"青椒","price":25,"id":23,"class":4},{"name":"麻糬","price":25,"id":24,"class":4},{"name":"香菇","price":25,"id":25,"class":4},{"name":"豆皮","price":25,"id":26,"class":4},{"name":"黃甜","price":25,"id":27,"class":4},{"name":"牛肉串","price":20,"id":28,"class":5},{"name":"羊肉串","price":20,"id":29,"class":5},{"name":"豬肉串","price":20,"id":30,"class":5},{"name":"鱈魚丸","price":20,"id":31,"class":5},{"name":"花枝丸","price":20,"id":32,"class":5},{"name":"四季豆","price":20,"id":33,"class":5},{"name":"百頁豆腐","price":20,"id":34,"class":5},{"name":"米腸","price":20,"id":35,"class":5},{"name":"雞皮","price":20,"id":36,"class":5},{"name":"白甜","price":20,"id":37,"class":5},{"name":"洋蔥","price":20,"id":38,"class":5},{"name":"豆干","price":20,"id":39,"class":5},{"name":"雞脖子","price":10,"id":40,"class":6},{"name":"黑輪","price":10,"id":41,"class":6},{"name":"熱狗","price":10,"id":42,"class":6}];
       }else{
         //讀取紀錄
         result = localStorage.getItem(propertyName);
@@ -27,7 +27,7 @@
     $rootScope.data={};
     $rootScope.data.menuList=localStorageService.getProperty("menuList")||[];
     $rootScope.data.checkList = localStorageService.getProperty("checkList")||[];
-    $rootScope.data.orderList={data:[],spicy:0};
+    $rootScope.data.orderList={data:[],spicy:0,pay:1};
     $rootScope.data.checkId = localStorageService.getProperty("checkId")||0;
     $rootScope.swal=swal;
 
@@ -173,13 +173,13 @@
           localStorageService.setProperty("checkId",vm.checkId);
           localStorageService.setProperty("checkList",vm.checkList);
         }
-        vm.orderList={data:[],spicy:0};
+        vm.orderList={data:[],spicy:0,pay:1};
         $rootScope.data.orderList=vm.orderList;
       },1);
     };
 
     vm.clear=function(){
-      vm.orderList={data:[],spicy:0};
+      vm.orderList={data:[],spicy:0,pay:1};
       $rootScope.data.orderList=vm.orderList;
     };
 
