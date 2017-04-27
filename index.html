@@ -1,234 +1,255 @@
 ﻿<!DOCTYPE html>
 <html ng-app="myApp">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>上榮新疆烤肉(台中店)</title>
-    <link href="./lib/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <!--<link href="./lib/bootstrap/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />-->
-    <link href="./lib/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
-    <link href="./css/main.css" rel="stylesheet" type="text/css" />
 
-  </head>
-  <body ng-controller="MainController as main">
-    <!-- Static navbar -->
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>上榮新疆烤肉(台中店)</title>
+  <link href="./lib/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <!--<link href="./lib/bootstrap/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />-->
+  <link href="./lib/sweetalert/sweetalert.css" rel="stylesheet" type="text/css" />
+  <link href="./css/main.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body ng-controller="MainController as main">
+  <!-- Static navbar -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">上榮新疆烤肉(台中店)</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li ng-class="{'active':main.isOrder}" ng-click="main.setTab(1)"><a href="#">點菜</a></li>
-            <li ng-class="{'active':main.isCheck}" ng-click="main.setTab(2)"><a href="#">結帳</a></li>
-            <li ng-class="{'active':main.isOption}" ng-click="main.setTab(3)"><a href="#">系統設定</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div><!--/.container-fluid -->
-    </nav>
+        <a class="navbar-brand" href="#">上榮新疆烤肉(台中店)</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li ng-class="{'active':main.isOrder}" ng-click="main.setTab(1)"><a href="#">點菜</a></li>
+          <li ng-class="{'active':main.isCheck}" ng-click="main.setTab(2)"><a href="#">結帳</a></li>
+          <li ng-class="{'active':main.isOption}" ng-click="main.setTab(3)"><a href="#">系統設定</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">語言設定 <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li ng-click="main.changeLanguage('tw')"><a href="#">中文</a></li>
+              <li ng-click="main.changeLanguage('vn')"><a href="#">Tiếng Việt</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+  </nav>
 
-    <div ng-if="main.isOrder" ng-controller="OrderController as order">
-      <div class="order-content">
-        <div class="order-menu col-xs-8 col-sm-9">
-          <div class="row">
-            <div ng-repeat="item in order.menuList" 
-                 class="col-xs-6 col-sm-4 col-md-2 menu-item">
-              <div ng-click="order.minus(item)" class="order-minus btn btn-default pull-left">
-                <i class="glyphicon glyphicon-minus"></i>
-              </div>
-
-              <div ng-click="order.plus(item)" class="btn btn-default pull-left order-item" ng-class="'order-item-'+item.class">
-                {{item.name}}
-              </div>
-
-              <div class="order-item-content text-right">
-                <span>&nbsp;</span>
-                <span ng-if="order.count(item)>0">數量：{{order.count(item)}}</span>
-              </div>
-
+  <div ng-if="main.isOrder" ng-controller="OrderController as order">
+    <div class="order-content">
+      <div class="order-menu col-xs-8 col-sm-9">
+        <div class="row">
+          <div ng-repeat="item in order.menuList" class="col-xs-6 col-sm-4 col-md-2 menu-item">
+            <div ng-click="order.minus(item)" class="order-minus btn btn-default pull-left">
+              <i class="glyphicon glyphicon-minus"></i>
             </div>
+
+            <div ng-click="order.plus(item)" class="btn btn-default pull-left order-item" ng-class="'order-item-'+item.class">
+              {{item[main.getLanguageName()]}}
+            </div>
+
+            <div class="order-item-content text-right">
+              <span>&nbsp;</span>
+              <span ng-if="order.count(item)>0">數量：{{order.count(item)}}</span>
+            </div>
+
           </div>
         </div>
-        <div class="order-list col-xs-4 col-sm-3">
-          <div class="row">
-            <div class="btn-group col-xs-12" role="group">
-              <div ng-click="order.submit()" class="btn btn-lg btn-primary col-xs-8">確定</div>
-              <div ng-click="order.clear()" class="btn btn-lg btn-default col-xs-4">清空</div>
-            </div>
-            <div class="order-id col-xs-12 text-right">單號：{{order.orderList.id||'NEW>'+order.newId(order.orderList.id)}}</div>
-            <div class="order-id col-xs-12 text-right">總共：{{main.numberCount(order.orderList.data)||0}}枝</div>
-            <div class="col-xs-12 btn-spicy"  data-toggle="">
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==0}">
+      </div>
+      <div class="order-list col-xs-4 col-sm-3">
+        <div class="row">
+          <div class="btn-group col-xs-12" role="group">
+            <div ng-click="order.submit()" class="btn btn-lg btn-primary col-xs-8">確定</div>
+            <div ng-click="order.clear()" class="btn btn-lg btn-default col-xs-4">清空</div>
+          </div>
+          <div class="order-id col-xs-12 text-right">單號：{{order.orderList.id||'NEW>'+order.newId(order.orderList.id)}}</div>
+          <div class="btn-group col-xs-12 btn-pay" data-toggle="">
+            <label class="btn btn-lg btn-default col-xs-6">
+                <input type="radio" name="phone" id="option1" autocomplete="off" ng-model="order.orderList.phone" value="0"> 現場
+              </label>
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.phone==1}">
+                <input type="radio" name="phone" id="option2" autocomplete="off" ng-model="order.orderList.phone" value="1"> 電話
+              </label>
+          </div>
+          <div class="order-id col-xs-12 text-right">總共：{{main.numberCount(order.orderList.data)||0}}枝</div>
+          <div class="col-xs-12 btn-spicy" data-toggle="">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==0}">
                 <input type="radio" name="spicy" id="option1" autocomplete="off" ng-model="order.orderList.spicy" value="0"> 不辣
               </label>
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==1}">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==1}">
                 <input type="radio" name="spicy" id="option2" autocomplete="off" ng-model="order.orderList.spicy" value="1"> 小辣
               </label>
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==2}">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==2}">
                 <input type="radio" name="spicy" id="option3" autocomplete="off" ng-model="order.orderList.spicy" value="2"> 中辣
               </label>
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==3}">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.spicy==3}">
                 <input type="radio" name="spicy" id="option4" autocomplete="off" ng-model="order.orderList.spicy" value="3"> 大辣
               </label>
-            </div>                        
-            <table class="table table-hover table-striped list-table">
-              <tr>
-                <td>商品</td>
-                <td class="text-right">數量</td>
-                <td class="text-right">單價</td>                
-                <td class="text-right">價格</td>
-              </tr>
-              <tr ng-repeat="item in order.orderList.data|orderBy:'id'">
-                <td class="">{{item.name}}</td>
-                <td class="text-right">{{item.count}}</td>
-                <td class="text-right">{{item.price}}</td>                
-                <td class="text-right">{{item.price*item.count}}</td>
-              </tr>
-              <tr>
-                <td colspan="4" class="text-right">
-                  總計：{{main.totalCount(order.orderList.data)}}
-                </td>
-              </tr>
-              <tr>
-                <td colspan="4" class="text-right">
-                  9折：{{main.totalCount(order.orderList.data)*main.discount}}
-                </td>
-              </tr>
-            </table>
-            <div class="btn-group col-xs-12 btn-pay"  data-toggle="">
-              <label class="btn btn-lg btn-default col-xs-6">
+          </div>
+          <table class="table table-hover table-striped list-table">
+            <tr>
+              <td>商品</td>
+              <td class="text-right">數量</td>
+              <td class="text-right">單價</td>
+              <td class="text-right">價格</td>
+            </tr>
+            <tr ng-repeat="item in order.orderList.data|orderBy:'id'">
+              <td class="">{{item[main.getLanguageName()]}}</td>
+              <td class="text-right">{{item.count}}</td>
+              <td class="text-right">{{item.price}}</td>
+              <td class="text-right">{{item.price*item.count}}</td>
+            </tr>
+            <tr>
+              <td colspan="4" class="text-right">
+                總計：{{main.totalCount(order.orderList.data)}}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4" class="text-right">
+                9折：{{main.totalCount(order.orderList.data)*main.discount}}
+              </td>
+            </tr>
+          </table>
+          <div class="btn-group col-xs-12 btn-pay" data-toggle="">
+            <label class="btn btn-lg btn-default col-xs-6">
                 <input type="radio" name="pay" id="option1" autocomplete="off" ng-model="order.orderList.pay" value="1"> 已付款
               </label>
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.pay==0}">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':order.orderList.pay==0}">
                 <input type="radio" name="pay" id="option2" autocomplete="off" ng-model="order.orderList.pay" value="0"> 未付款
-              </label>              
-            </div>
+              </label>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div ng-if="main.isCheck" ng-controller="CheckController as check">
-      <div class="col-xs-12">
-        <button class="btn btn-danger pull-right" ng-click="check.reId()">單號強制重算</button>
-      </div>
-      <div ng-repeat="list in check.checkList">
-        <div class="col-xs-12 col-sm-6 col-md-4">
-          <div class="check-item">
-            <div class="order-id col-xs-12 text-right">單號：{{list.id}}</div>
-            <div class="order-id col-xs-12 text-right">總共：{{main.numberCount(list.data)||0}}枝</div>
-            <div class="col-xs-12 btn-spicy"  data-toggle="">
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==0}">
+  <div ng-if="main.isCheck" ng-controller="CheckController as check">
+    <div class="col-xs-12">
+      <button class="btn btn-danger pull-right" ng-click="check.reId()">單號強制重算</button>
+    </div>
+    <div ng-repeat="list in check.checkList">
+      <div class="col-xs-12 col-sm-6 col-md-4">
+        <div class="check-item">
+          <div class="order-id col-xs-12 text-right" ng-show="list.phone!=1">單號：{{list.id}}</div>
+          <div class="order-id col-xs-12 text-right" ng-show="list.phone==1">電話訂購</div>
+          <div class="order-id col-xs-12 text-right">總共：{{main.numberCount(list.data)||0}}枝</div>
+          <div class="col-xs-12 btn-spicy" data-toggle="">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==0}">
                 <input type="radio" name="spicy" id="option1" autocomplete="off" ng-model="list.spicy" value="0" disabled> 不辣
               </label>
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==1}">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==1}">
                 <input type="radio" name="spicy" id="option2" autocomplete="off" ng-model="list.spicy" value="1" disabled> 小辣
               </label>
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==2}">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==2}">
                 <input type="radio" name="spicy" id="option3" autocomplete="off" ng-model="list.spicy" value="2" disabled> 中辣
               </label>
-              <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==3}">
+            <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.spicy==3}">
                 <input type="radio" name="spicy" id="option4" autocomplete="off" ng-model="list.spicy" value="3" disabled> 大辣
               </label>
-            </div>
-            <table class="table table-hover table-striped list-table">
-              <tr>
-                <td>商品</td>
-                <td class="text-right">數量</td>
-                <td class="text-right">單價</td>                
-                <td class="text-right">價格</td>
-              </tr>
-              <tr ng-repeat="item in list.data|orderBy:'id'">
-                <td class="">{{item.name}}</td>
-                <td class="text-right">{{item.count}}</td>
-                <td class="text-right">{{item.price}}</td>              
-                <td class="text-right">{{item.price*item.count}}</td>
-              </tr>
-              <tr>
-                <td colspan="4" class="text-right">
-                  總計：{{main.totalCount(list.data)}}
-                </td>
-              </tr>
-              <tr>
-                <td colspan="4" class="text-right">
-                  9折：{{main.totalCount(list.data)*main.discount}}
-                </td>
-              </tr>
-              <tr>
-                <td colspan="4">
-                  <div class="btn-group col-xs-12 btn-pay"  data-toggle="">
-                    <label class="btn btn-lg btn-default col-xs-6">
+          </div>
+          <table class="table table-hover table-striped list-table">
+            <tr>
+              <td>商品</td>
+              <td class="text-right">數量</td>
+              <td class="text-right">單價</td>
+              <td class="text-right">價格</td>
+            </tr>
+            <tr ng-repeat="item in list.data|orderBy:'id'">
+              <td class="">{{item[main.getLanguageName()]}}</td>
+              <td class="text-right">{{item.count}}</td>
+              <td class="text-right">{{item.price}}</td>
+              <td class="text-right">{{item.price*item.count}}</td>
+            </tr>
+            <tr>
+              <td colspan="4" class="text-right">
+                總計：{{main.totalCount(list.data)}}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4" class="text-right">
+                9折：{{main.totalCount(list.data)*main.discount}}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <div class="btn-group col-xs-12 btn-pay" data-toggle="">
+                  <!--<label class="btn btn-lg btn-default col-xs-6">
                       <input type="radio" name="pay" id="option1" autocomplete="off" ng-model="list.pay" value="1" disabled> 已付款
-                    </label>
-                    <label class="btn btn-lg btn-default col-xs-6" ng-class="{'active':list.pay==0}">
+                    </label>-->
+                  <label class="btn btn-lg btn-default col-xs-12" ng-class="{'active':list.pay==0}">
                       <input type="radio" name="pay" id="option2" autocomplete="off" ng-model="list.pay" value="0" disabled> 未付款
                     </label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="4">
-                  <div class="btn-group col-xs-12" role="group">
-                    <div ng-click="check.edit(list)" class="btn btn-info col-xs-4">修改</div>
-                    <div ng-click="check.submit(list)" class="btn btn-primary col-xs-8">以交貨</div>                    
-                  </div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>        
-        <div class="clearfix visible-sm" ng-if="($index+1)%2==0"></div>
-        <div class="clearfix visible-md" ng-if="($index+1)%3==0"></div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <div class="btn-group col-xs-12" role="group">
+                  <div ng-click="check.edit(list)" class="btn btn-info col-xs-4">修改</div>
+                  <div ng-click="check.submit(list)" class="btn btn-primary col-xs-8">以交貨</div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
+      <div class="clearfix visible-sm" ng-if="($index+1)%2==0"></div>
+      <div class="clearfix visible-md" ng-if="($index+1)%3==0"></div>
     </div>
+  </div>
 
-    <div ng-if="main.isOption" ng-controller="OptionController as menu">
-      <a class="btn btn-lg btn-info" href="https://build.phonegap.com/apps/2419280/install/Ky2qSjpzNd1mbzYqybzP">更新程式</a>
-      <div class="edit-view">
-        <form ng-submit="menu.submit()">
-          <div class="form-group">
-            <label for="itemId">序號</label>
-            <input ng-model="menu.item.id" type="number" class="form-control" id="itemId" placeholder="Id" disabled>
-          </div>
-          <div class="form-group">
-            <label for="itemName">商品名稱</label>
-            <input ng-model="menu.item.name" type="text" class="form-control" id="itemName" placeholder="商品名稱" required>
-          </div>
-          <div class="form-group">
-            <label for="itemPrice">價錢</label>
-            <input ng-model="menu.item.price" type="number" class="form-control" id="itemPrice" placeholder="商品金額" required>
-          </div>
-          <div class="form-group">
-            <label for="itemClass">分類號碼</label>
-            <input ng-model="menu.item.class" type="number" class="form-control" id="itemClass" placeholder="分類號碼" required>
-          </div>
-          <button type="submit" class="btn btn-primary">確認</button>
-          <button type="button" class="btn btn-danger">刪除</button>
-          <button type="button" class="btn btn-default">上一頁</button>
-        </form>
-      </div>
-      <div class="list-view">
-        <table class="table table-hover table-striped">
-          <tr ng-repeat="item in menu.menuList">
-            <td>{{item.id}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.price}}</td>
-          </tr>
-        </table>
-      </div>
+  <div ng-if="main.isOption" ng-controller="OptionController as menu">
+    <a class="btn btn-lg btn-info" href="https://build.phonegap.com/apps/2419280/install/Ky2qSjpzNd1mbzYqybzP">更新程式</a>
+    <div class="edit-view">
+      <form ng-submit="menu.submit()">
+        <div class="form-group">
+          <label for="itemId">序號</label>
+          <input ng-model="menu.item.id" type="number" class="form-control" id="itemId" placeholder="Id" disabled>
+        </div>
+        <div class="form-group">
+          <label for="itemName">商品名稱</label>
+          <input ng-model="menu.item.name" type="text" class="form-control" id="itemName" placeholder="商品名稱" required>
+        </div>
+        <div class="form-group">
+          <label for="itemPrice">價錢</label>
+          <input ng-model="menu.item.price" type="number" class="form-control" id="itemPrice" placeholder="商品金額" required>
+        </div>
+        <div class="form-group">
+          <label for="itemClass">分類號碼</label>
+          <input ng-model="menu.item.class" type="number" class="form-control" id="itemClass" placeholder="分類號碼" required>
+        </div>
+        <button type="submit" class="btn btn-primary">確認</button>
+        <button type="button" class="btn btn-danger">刪除</button>
+        <button type="button" class="btn btn-default">上一頁</button>
+      </form>
     </div>
+    <div class="list-view">
+      <table class="table table-hover table-striped">
+        <tr ng-repeat="item in menu.menuList">
+          <td>{{item.id}}</td>
+          <td>{{item[main.getLanguageName()]}}</td>
+          <td>{{item.price}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-    <script src="./lib/angular/angular.min.js"></script>
-    <script src="./lib/jquery/jquery.min.js"></script>
-    <script src="./lib/bootstrap/bootstrap.min.js"></script>
-    <script src="./lib/sweetalert/sweetalert.js"></script>
-    <script src="./js/main.js"></script>
-  </body>
+  <script src="./lib/angular/angular.min.js"></script>
+  <script src="./lib/jquery/jquery.min.js"></script>
+  <script src="./lib/bootstrap/bootstrap.min.js"></script>
+  <script src="./lib/sweetalert/sweetalert.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
 </html>
